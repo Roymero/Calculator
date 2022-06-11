@@ -2,12 +2,14 @@ var initial = [];
 var secondary = [];
 var initialNumber;
 var secondaryNumber;
+var result;
 var operation;
 
 
 function addArray(a){
 
     secondary.push(a);
+
     secondaryNumber = Number(secondary.join(""));
 
 }
@@ -21,15 +23,65 @@ function deleteLast(){
 }
 
 
+function equalsOperation(){
+
+    if (initialNumber != null){
+
+        if(operation == "+"){
+            result = initialNumber + secondaryNumber;
+            initialScreen.textContent = initialNumber + " + " + secondaryNumber + " = ";
+            secondaryScreen.textContent = result;
+        }
+        else if(operation == "-"){
+            result = initialNumber - secondaryNumber;
+            initialScreen.textContent = initialNumber + " - " + secondaryNumber + " = ";
+            secondaryScreen.textContent = result;
+        }
+        else if(operation == "÷"){
+            result = initialNumber / secondaryNumber;
+            initialScreen.textContent = initialNumber + " ÷ " + secondaryNumber + " = ";
+            secondaryScreen.textContent = result;
+        }
+        else if(operation == "*"){
+            result = initialNumber * secondaryNumber;
+            initialScreen.textContent = initialNumber + " × " + secondaryNumber + " = ";
+            secondaryScreen.textContent = result;
+        }
+
+
+
+
+    }
+
+   
+    
+}
+
+function checkoperation(){
+    if (operation == null) {
+        initialNumber = secondaryNumber
+        secondaryNumber = 0;
+        secondary = [];
+    }
+
+    if(operation != null && initialNumber != null){
+
+    }
+}
+
+
 function clearAll(){ //Function clears both screens
     secondary = [];
     initial = [];
+    initialNumber = null;
+    secondaryNumber = 0;
+    operation = null;
     secondaryScreen.textContent = 0;
     initialScreen.textContent = '';
 }
 
 
-
+const Button0 = document.getElementById('Button0');
 const Button1 = document.getElementById('Button1');
 const Button2 = document.getElementById('Button2');
 const Button3 = document.getElementById('Button3');
@@ -42,17 +94,24 @@ const Button9 = document.getElementById('Button9');
 
 const divideButton = document.getElementById('divideButton')
 const multiplyButton = document.getElementById('multiplyButton')
-const addButton = document.getElementById('addButton')
-const minisButton = document.getElementById('minusButton')
+const plusButton = document.getElementById('plusButton')
+const minusButton = document.getElementById('minusButton')
+const equalsButton = document.getElementById('equalsButton')
 
 
 
-const initialScreen = document.getElementById('initialScreen')
-const secondaryScreen = document.getElementById('secondaryScreen') // Secondary screen is the the second scren
-
+const initialScreen = document.getElementById('initialScreen') // Initial screen is first screen from the top
+const secondaryScreen = document.getElementById('secondaryScreen') // Secondary screen is the the second screen
+                                                                   // From the top
 const clearButton = document.getElementById('clearButton')
 const deleteButton = document.getElementById('deleteButton')
 
+
+Button0.addEventListener("click", ()=>{
+    addArray(0);
+    secondaryScreen.textContent = secondaryNumber;
+
+});
 
 Button1.addEventListener("click", ()=>{
     addArray(1);
@@ -120,3 +179,60 @@ deleteButton.addEventListener("click",()=>{
     deleteLast();
 
 })
+
+
+plusButton.addEventListener("click", ()=>{
+
+    checkoperation();
+    operation = "+";
+    initialScreen.textContent = initialNumber + " +";
+    secondaryScreen.textContent = secondaryNumber;
+
+
+    
+
+
+});
+
+
+minusButton.addEventListener("click", ()=>{
+
+    checkoperation();
+    operation = "-";
+    initialScreen.textContent = initialNumber + " -";
+    secondaryScreen.textContent = secondaryNumber;
+
+
+});
+
+
+multiplyButton.addEventListener("click", ()=>{
+
+    checkoperation();
+    operation = "*";
+    initialScreen.textContent = initialNumber + " ×";
+    secondaryScreen.textContent = secondaryNumber;
+
+
+});
+
+
+
+
+divideButton.addEventListener("click", ()=>{
+
+    checkoperation();
+    operation = "÷";
+    initialScreen.textContent = initialNumber + " ÷";
+    secondaryScreen.textContent = secondaryNumber;
+
+
+});
+
+
+equalsButton.addEventListener("click", ()=>{
+
+    equalsOperation();
+
+
+});
