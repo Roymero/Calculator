@@ -2,7 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+   
 
 
 }
@@ -13,6 +13,7 @@ body{
     background-color: #2e9599; 
     margin-bottom: 100px;
     line-height: 1.6;
+    overflow: hidden;
 }
 
 
@@ -46,12 +47,21 @@ body{
     text-align: right;
     word-wrap: break-word;
     word-break: break-all;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
 }
 
 
 .firstScreen{
     min-height: 32px;
+    background-color: maroon;
     font-size: 20px;
+}
+
+.secondScreen{
+    min-height: 64px;
+    background-color: green;
+    font-size: 40px;
 }
 
 
@@ -84,7 +94,7 @@ body{
 }
 
 .blueButton{
-    background-color: lightblue;
+    background-color: rgb(142, 204, 225);
     
 }
 
