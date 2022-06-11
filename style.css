@@ -10,7 +10,7 @@
 
 
 body{
-    background-color: #78CCCB; 
+    background-color: #2e9599; 
     margin-bottom: 100px;
     line-height: 1.6;
 }
@@ -27,18 +27,18 @@ body{
 }
 
 .calculator{
-    background-color: rgb(185, 120, 246);
+    background-color: #0080ff;
     width: 400px;
     border-radius: 15px;
     padding: 20px;
     height: 575px;
-    border: 2px purple solid;
+    border: 2px black solid;
 }
 
 
 .screen{
     padding: 10px 20px;
-    border: 2px purple solid;
+    border: 2px black solid;
     border-radius: 5px;
     margin-bottom: 20px;
     height: 125px;
@@ -49,18 +49,32 @@ body{
 }
 
 
+.firstScreen{
+    min-height: 32px;
+    font-size: 20px;
+}
+
+
 .buttons{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: grid;  /* This makes the display a grid*/
+    grid-template-columns: repeat(4, 1fr);  /*makes a column of 4*/
     grid-gap: 10px;
 }
 
 .btn{
     padding: 20px;
-    border: 2px purple solid;
+    border: 2px black solid;
     border-radius: 5px;
     font-size: 20px;
-    background-color: #EABACB;
+    background-color: lightgray
+}
+
+.btn:hover{
+    background-color: rgba(234, 186, 203, 0.6)
+}
+
+.btn:active{
+    background-color: rgba(234, 186, 203, 0.3)
 }
 
 
