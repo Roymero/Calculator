@@ -4,31 +4,67 @@ var secondaryNumber;
 var equalsPressed = false;
 var result;
 var operation;
+var holder;
 
-// to do result function not being stored as array
-// decimals needs work in
-// screen needs to strech upwards
+// To-do:
+// 3. decimals needs work in
+// 2. screen needs to strech upwards
+
+
 function addArray(a){
 
+    if(a == "."){
+        if (secondary.includes(".") == false && secondary.length != 0 ) {
+            secondary.push(a);
+
+        }
+        else if(secondary.includes(".") == false && secondary.length == 0){
+            secondary.push(0);
+            secondary.push(a);
+        }
+    }
+    else{
+        secondary.push(a);
+    }
+
+    secondaryNumber = secondary.join("");
+    
+    // secondaryNumber = Number(secondary.join(""));
+
+}
 
 
-    secondary.push(a);
+function number2str(){
 
-    if (secondary.includes(".") == true) {
+    secondaryNumber = secondaryNumber.toString();
+    initialNumber = initialNumber.toString();
+}
 
+function str2numbers(){
+    
+    if(secondaryNumber.includes(".") == true){
+        secondaryNumber = parseFloat(secondaryNumber);
+
+    }
+    else if(secondaryNumber.includes(".") == false){
+        secondaryNumber = parseInt(secondaryNumber);
 
 
     }
 
+    if(initialNumber.includes(".") == true){
+        initialNumber = parseFloat(initialNumber);
+    }
+    else if(initialNumber.includes(".") == false){
+        initialNumber = parseInt(initialNumber);
 
-    secondaryNumber = Number(secondary.join(""));
-        
+    }
 }
 
 function deleteLast(){
 
     secondary.pop();
-    secondaryNumber = Number(secondary.join(""));
+    secondaryNumber = secondary.join("");
     secondaryScreen.textContent = secondaryNumber;
 
 }
@@ -38,10 +74,13 @@ function equalsOperation(){
 
     if (initialNumber != null && secondaryNumber != null){
 
+        str2numbers();
+
         if(operation == "+"){
             result = initialNumber + secondaryNumber;
+            result = result.toString();
             initialScreen.textContent = initialNumber + " + " + secondaryNumber + " = ";   
-            secondary = result.toString().split('').map(iNum => parseInt(iNum, 10));
+            secondary = result.toString().split('');
             console.log(secondary)
             secondaryScreen.textContent = result;
             
@@ -49,28 +88,32 @@ function equalsOperation(){
         else if(operation == "-"){
             result = initialNumber - secondaryNumber;
             initialScreen.textContent = initialNumber + " - " + secondaryNumber + " = ";
+            secondary = result.toString().split('')
             secondaryScreen.textContent = result;
         }
         else if(operation == "÷"){
             result = initialNumber / secondaryNumber;
             initialScreen.textContent = initialNumber + " ÷ " + secondaryNumber + " = ";
+            secondary = result.toString().split('')
             secondaryScreen.textContent = result;
         }
         else if(operation == "×"){
             result = initialNumber * secondaryNumber;
             initialScreen.textContent = initialNumber + " × " + secondaryNumber + " = ";
+            secondary = result.toString().split('')
             secondaryScreen.textContent = result;
         }
 
         equalsPressed = true;
+        number2str();
 
     }   
 
     
 }
 
-function checkEquals(){ // function that checks if equals button was pressed and if so next number that is pressed 
-                        // resets
+function checkEquals(){                   // function that checks if equals button was pressed and if so next number that is pressed 
+                                          // resets
     if(equalsPressed == true){
         clearAll();
         equalsPressed = false;
@@ -79,8 +122,9 @@ function checkEquals(){ // function that checks if equals button was pressed and
 
 }
 
-function continueOperation(){ //Function that lets the calculator continue the operations
+function continueOperation(){             // function that lets the calculator continue the operations
     initialNumber = result;
+    initialNumber = initialNumber.toString();
     secondaryNumber = null;
     secondary = [];
     equalsPressed = false;
@@ -100,11 +144,13 @@ function checkoperation(){                // function that checks if the operati
 
        
     }
+    console.log(initialNumber)
 }
 
 
-function changeValues(){
+function changeValues(){                    // Function that changes the values on initial and secondary screen                                         
     if(operation != null && secondaryNumber == null){
+       
         initialScreen.textContent = initialNumber + " " + operation;
         secondaryScreen.textContent = "0";    
         
@@ -113,7 +159,22 @@ function changeValues(){
 }
 
 
-function clearAll(){ //Function clears both screens
+function deleteCheck(){
+
+    if (equalsPressed == true) {
+        
+        initialNumber = null;
+        equalsPressed = false
+        initialScreen.textContent = '';
+        operation = null;
+        console.log(equalsPressed) 
+
+    }
+
+}
+
+
+function clearAll(){                            //Function clears both screens
     secondary = [];
     initialNumber = null;
     secondaryNumber = 0;
@@ -151,6 +212,7 @@ const deleteButton = document.getElementById('deleteButton')
 
 
 Button0.addEventListener("click", ()=>{
+    checkEquals();
     addArray(0);
     secondaryScreen.textContent = secondaryNumber;
 
@@ -226,10 +288,6 @@ decimalButton.addEventListener("click", ()=>{
 
 });
 
-
-
-
-
 clearButton.addEventListener("click", ()=>{
     clearAll()
 })
@@ -238,7 +296,8 @@ clearButton.addEventListener("click", ()=>{
 deleteButton.addEventListener("click",()=>{
 
     deleteLast();
-
+    deleteCheck();
+   
 })
 
 
@@ -277,6 +336,6 @@ divideButton.addEventListener("click", ()=>{
 });
 
 equalsButton.addEventListener("click", ()=>{
-
+    
     equalsOperation();
 });
