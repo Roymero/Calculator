@@ -7,35 +7,36 @@ var operation;
 var holder;
 
 // To-do:
-// 3. decimals needs work in
+// Keyboard inputs
 
 
 function addArray(a){
 
-    if(secondary[0] == "0" && secondary.includes (".") == false){
-        secondary.shift()
-    }
+    if (secondary.length < 28) {
 
-    if(a == "."){
-        if (secondary.includes(".") == false && secondary.length != 0 ) {
-            secondary.push(a);
-
+        if (secondary[0] == "0" && secondary.includes(".") == false) {
+            secondary.shift()
         }
-        else if(secondary.includes(".") == false && secondary.length == 0){
-            secondary.push(0);
+
+        if (a == ".") {
+            if (secondary.includes(".") == false && secondary.length != 0) {
+                secondary.push(a);
+
+            }
+            else if (secondary.includes(".") == false && secondary.length == 0) {
+                secondary.push(0);
+                secondary.push(a);
+            }
+        }
+        else {
             secondary.push(a);
         }
-    }
-    else{
-        secondary.push(a);
-    }
 
-    secondaryNumber = secondary.join("");
-    
-    // secondaryNumber = Number(secondary.join(""));
+        secondaryNumber = secondary.join("");
 
+        // secondaryNumber = Number(secondary.join(""));
+    }
 }
-
 
 function number2str(){
 
@@ -102,11 +103,21 @@ function equalsOperation(){
             
             result = initialNumber / secondaryNumber;
             initialScreen.textContent = initialNumber + " ÷ " + secondaryNumber + " = ";
-            if(secondaryNumber == 0){
-
+            if (secondaryNumber == 0) {
+                secondary = [];
+                initialNumber = 0;
+                secondaryNumber = 0;
+                operation = null;
+                secondaryScreen.textContent = "Not possible"
+                result = null;
+               
             }
-            secondary = result.toString().split('')
-            secondaryScreen.textContent = result;
+            else{
+                secondaryScreen.textContent = result;
+                secondary = result.toString().split('')
+            }
+           
+     
         }
         else if(operation == "×"){
             result = initialNumber * secondaryNumber;
@@ -133,6 +144,7 @@ function checkEquals(){                   // function that checks if equals butt
 }
 
 function continueOperation(){             // function that lets the calculator continue the operations
+    
     initialNumber = result;
     initialNumber = initialNumber.toString();
     secondaryNumber = null;
@@ -154,7 +166,13 @@ function checkoperation(){                // function that checks if the operati
 
        
     }
-    console.log(initialNumber)
+
+    if(operation == null && secondaryNumber == undefined && (initialNumber == 0 || initialNumber == null)){
+        initialNumber = "0"
+        secondaryNumber = null;
+        secondary = [];
+    }
+
 }
 
 
@@ -183,13 +201,15 @@ function deleteCheck(){
 }
 
 
-function clearAll(){                            //Function clears both screens
+function clearAll(){                     //Function clears both screens
+   
     secondary = [];
     initialNumber = null;
     secondaryNumber = 0;
     operation = null;
     secondaryScreen.textContent = 0;
     initialScreen.textContent = '';
+
 }
 
 
@@ -347,4 +367,126 @@ divideButton.addEventListener("click", ()=>{
 equalsButton.addEventListener("click", ()=>{
     
     equalsOperation();
+
 });
+
+
+document.addEventListener('keydown', (event)=>{     //Keyboard inputs
+    console.log(event)
+    if (event.code == 'Numpad1' || event.key == '1') {
+      
+        checkEquals();
+        addArray(1);
+        secondaryScreen.textContent = secondaryNumber;
+    }
+    else if(event.code == 'Numpad2' || event.key == '2') {
+       
+        checkEquals();
+        addArray(2);
+        secondaryScreen.textContent = secondaryNumber;
+    }
+    else if(event.code == 'Numpad3' || event.key == '3') {
+      
+        checkEquals();
+        addArray(3);
+        secondaryScreen.textContent = secondaryNumber;
+
+    }
+    else if(event.code == 'Numpad4' || event.key == '4') {
+        
+        checkEquals();
+        addArray(4);
+        secondaryScreen.textContent = secondaryNumber;
+
+    }
+    else if(event.code == 'Numpad5' || event.key == '5') {
+        
+        checkEquals();
+        addArray(5);
+        secondaryScreen.textContent = secondaryNumber;
+
+    }
+    else if(event.code == 'Numpad6' || event.key == '6') {
+      
+        checkEquals();
+        addArray(6);
+        secondaryScreen.textContent = secondaryNumber;
+
+    }
+    else if(event.code == 'Numpad7' || event.key == '7') {
+    
+        checkEquals();
+        addArray(7);
+        secondaryScreen.textContent = secondaryNumber;
+
+    }
+    else if(event.code == 'Numpad8' || event.key == '8') {
+        
+        checkEquals();
+        addArray(8);
+        secondaryScreen.textContent = secondaryNumber;
+        
+    }
+    else if(event.code == 'Numpad9' || event.key == '9') {
+       
+        checkEquals();
+        addArray(9);
+        secondaryScreen.textContent = secondaryNumber;
+
+    }
+    else if (event.code == 'Numpad0' || event.key == '0') {
+       
+        checkEquals();
+        addArray("0");
+        secondaryScreen.textContent = secondaryNumber;
+
+
+    }
+    else if (event.code == 'NumpadDecimal' || event.key == '.') {
+       
+        addArray(".");
+        secondaryScreen.textContent = secondaryNumber;
+
+    }
+    else if (event.key == '+') {
+        
+        checkoperation();
+        operation = "+";
+        changeValues();
+
+    }
+    else if (event.key == '-') {
+      
+        checkoperation();
+        operation = "-";
+        changeValues();
+    }
+    else if (event.key == '*') {
+       
+        checkoperation();
+        operation = "×";
+        changeValues();
+    }
+    else if (event.key == '/') {
+        
+        checkoperation();
+        operation = "÷";
+        changeValues();
+    }
+    else if (event.code == 'Enter' || event.key == '=' ) {
+
+        equalsOperation();
+    }
+    else if(event.key == 'Backspace') {
+     
+        deleteLast();
+        deleteCheck();
+    }
+    else if(event.key == 'Escape') {
+        
+        clearAll()
+
+    }
+    
+
+})
