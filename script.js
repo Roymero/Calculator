@@ -4,11 +4,9 @@ var secondaryNumber;
 var equalsPressed = false;
 var result;
 var operation;
-var holder;
 
-// To-do:
-// Keyboard inputs
 
+// Ver 1.0 complete
 
 function addArray(a){
 
@@ -34,7 +32,6 @@ function addArray(a){
 
         secondaryNumber = secondary.join("");
 
-        // secondaryNumber = Number(secondary.join(""));
     }
 }
 
@@ -82,6 +79,17 @@ function equalsOperation(){
 
     if (initialNumber != null && secondaryNumber != null){
 
+        if (initialNumber.length == 1 && initialNumber[0] == '-') {
+            secondary = [];
+            initialNumber = "0";
+            secondaryNumber = "0";
+            operation = null;
+            secondaryScreen.textContent = "Not possible"
+            result = null;
+            return;
+            
+        }
+
         str2numbers();
 
         if(operation == "+"){
@@ -89,7 +97,6 @@ function equalsOperation(){
             result = result.toString();
             initialScreen.textContent = initialNumber + " + " + secondaryNumber + " = ";   
             secondary = result.toString().split('');
-            console.log(secondary)
             secondaryScreen.textContent = result;
             
         }
@@ -105,19 +112,18 @@ function equalsOperation(){
             initialScreen.textContent = initialNumber + " ÷ " + secondaryNumber + " = ";
             if (secondaryNumber == 0) {
                 secondary = [];
-                initialNumber = 0;
-                secondaryNumber = 0;
+                initialNumber = "0";
+                secondaryNumber = "0";
                 operation = null;
                 secondaryScreen.textContent = "Not possible"
                 result = null;
-               
+                return;
+
             }
             else{
                 secondaryScreen.textContent = result;
                 secondary = result.toString().split('')
             }
-           
-     
         }
         else if(operation == "×"){
             result = initialNumber * secondaryNumber;
@@ -312,6 +318,7 @@ Button9.addEventListener("click", ()=>{
 
 
 decimalButton.addEventListener("click", ()=>{
+    checkEquals();
     addArray(".");
     secondaryScreen.textContent = secondaryNumber;
 
@@ -372,7 +379,7 @@ equalsButton.addEventListener("click", ()=>{
 
 
 document.addEventListener('keydown', (event)=>{     //Keyboard inputs
-    console.log(event)
+   
     if (event.code == 'Numpad1' || event.key == '1') {
       
         checkEquals();
@@ -425,7 +432,7 @@ document.addEventListener('keydown', (event)=>{     //Keyboard inputs
         checkEquals();
         addArray(8);
         secondaryScreen.textContent = secondaryNumber;
-        
+
     }
     else if(event.code == 'Numpad9' || event.key == '9') {
        
@@ -443,7 +450,8 @@ document.addEventListener('keydown', (event)=>{     //Keyboard inputs
 
     }
     else if (event.code == 'NumpadDecimal' || event.key == '.') {
-       
+        
+        checkEquals();
         addArray(".");
         secondaryScreen.textContent = secondaryNumber;
 
@@ -473,7 +481,7 @@ document.addEventListener('keydown', (event)=>{     //Keyboard inputs
         operation = "÷";
         changeValues();
     }
-    else if (event.code == 'Enter' || event.key == '=' ) {
+    else if ( event.key == '=' ) {
 
         equalsOperation();
     }
@@ -488,5 +496,4 @@ document.addEventListener('keydown', (event)=>{     //Keyboard inputs
 
     }
     
-
 })
