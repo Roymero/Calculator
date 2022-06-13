@@ -8,10 +8,13 @@ var holder;
 
 // To-do:
 // 3. decimals needs work in
-// 2. screen needs to strech upwards
 
 
 function addArray(a){
+
+    if(secondary[0] == "0" && secondary.includes (".") == false){
+        secondary.shift()
+    }
 
     if(a == "."){
         if (secondary.includes(".") == false && secondary.length != 0 ) {
@@ -67,6 +70,10 @@ function deleteLast(){
     secondaryNumber = secondary.join("");
     secondaryScreen.textContent = secondaryNumber;
 
+    if(secondary.length === 0){
+        secondaryScreen.textContent = "0";
+    }
+
 }
 
 
@@ -92,8 +99,12 @@ function equalsOperation(){
             secondaryScreen.textContent = result;
         }
         else if(operation == "÷"){
+            
             result = initialNumber / secondaryNumber;
             initialScreen.textContent = initialNumber + " ÷ " + secondaryNumber + " = ";
+            if(secondaryNumber == 0){
+
+            }
             secondary = result.toString().split('')
             secondaryScreen.textContent = result;
         }
@@ -108,7 +119,6 @@ function equalsOperation(){
         number2str();
 
     }   
-
     
 }
 
@@ -157,7 +167,6 @@ function changeValues(){                    // Function that changes the values 
     }
 
 }
-
 
 function deleteCheck(){
 
@@ -213,7 +222,7 @@ const deleteButton = document.getElementById('deleteButton')
 
 Button0.addEventListener("click", ()=>{
     checkEquals();
-    addArray(0);
+    addArray("0");
     secondaryScreen.textContent = secondaryNumber;
 
 });
